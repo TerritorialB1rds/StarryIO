@@ -129,3 +129,18 @@ document.querySelectorAll('button').forEach(button => {
         }
     });
 });
+let score = 0;
+
+// Call this whenever the score updates
+function updateScore(points) {
+    score += points;
+    document.getElementById('scoreDisplay').textContent = `Score: ${score}`;
+    saveScore(score);  // Save the updated score to localStorage
+}
+
+// Load the score when the page is loaded
+window.addEventListener('load', () => {
+    let savedScore = loadScore();
+    score = savedScore;
+    document.getElementById('scoreDisplay').textContent = `Score: ${score}`;
+});
