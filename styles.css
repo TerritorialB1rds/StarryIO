@@ -1,0 +1,94 @@
+/* General Body Styles */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    flex-direction: column;
+}
+
+/* Header Styling */
+header {
+    position: absolute;
+    top: 10px; /* Moved closer to the top */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+header h1 {
+    font-size: 30px; /* Smaller text size */
+    font-family: 'Arial', sans-serif;
+    color: white;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+/* Starry Background */
+.stars {
+    width: 100%;
+    height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/stardust.png');
+    position: absolute;
+    animation: twinkle 2s infinite alternate;
+    z-index: -1;
+}
+
+@keyframes twinkle {
+    from { opacity: 0.7; }
+    to { opacity: 1; }
+}
+
+/* Login/Register Form */
+#authContainer {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+input {
+    display: block;
+    width: 200px;
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid white;
+    border-radius: 5px;
+    background: #222;
+    color: white;
+}
+
+button {
+    background: #444;
+    color: white;
+    border: 2px solid white;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: transform 0.1s ease, box-shadow 0.2s ease;
+    outline: 3px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    margin: 5px;
+}
+
+button:active {
+    transform: scale(0.9);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+}
+
+/* Hide elements by default */
+.hidden {
+    display: none;
+}
