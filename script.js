@@ -129,24 +129,7 @@ document.querySelectorAll('button').forEach(button => {
         }
     });
 });
-// Function to load progress
-function loadProgress() {
-    // Retrieve player data from localStorage
-    const savedProgress = localStorage.getItem('playerProgress');
-
-    if (savedProgress) {
-        // Parse the saved progress and return it
-        return JSON.parse(savedProgress);
-    }
-
-    // Return default data if no progress is saved
-    return { level: 1, score: 0 }; // Default progress
-}
-
-// Example usage
-const progress = loadProgress();
-console.log("Loaded player progress:", progress);
-// Set the score to 0 initially (or load from localStorage if it exists)
+// Check if the score is stored in localStorage when the page loads
 let score = localStorage.getItem('score') ? parseInt(localStorage.getItem('score')) : 0;
 
 // Function to update the score display
@@ -159,31 +142,28 @@ function saveScore() {
     localStorage.setItem('score', score);
 }
 
-// Function to handle click event on "Click Me!" button
+// Handle "Click Me!" button click to increment score
 document.getElementById("clickButton").addEventListener("click", function() {
-    // Increment the score
-    score++;
-    updateScoreDisplay();
-    saveScore(); // Save the updated score to localStorage
+    score++;  // Increment the score
+    updateScoreDisplay();  // Update the score display
+    saveScore();  // Save the new score to localStorage
 });
 
-// Load progress on page load
+// Load the score when the page is loaded
 window.onload = function() {
-    updateScoreDisplay(); // Update the score display on page load
+    updateScoreDisplay();  // Update the score display from saved data
 };
 
-// Handle login functionality (for demo purposes, you can add basic username/password checks)
+// Handle login toggling
 document.getElementById("loginToggle").addEventListener("click", function() {
-    // Toggle visibility of login/signup container
-    document.getElementById("authContainer").classList.toggle("hidden");
+    document.getElementById("authContainer").classList.toggle("hidden"); // Toggle the login container
 });
 
-// Handle logout functionality
+// Handle logout action
 document.getElementById("logoutBtn").addEventListener("click", function() {
-    // Clear the localStorage on logout
-    localStorage.removeItem('score');
-    score = 0;
-    updateScoreDisplay();
+    localStorage.removeItem('score');  // Remove saved score from localStorage
+    score = 0;  // Reset score to 0
+    updateScoreDisplay();  // Update the display
     alert("Logged out successfully.");
 });
 
@@ -192,17 +172,17 @@ document.getElementById("loginBtn").addEventListener("click", function() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    // Simple username/password validation (you can improve this logic)
+    // Simple username/password validation (You can improve this logic later)
     if (username && password) {
         alert("Logged in successfully!");
-        document.getElementById("authContainer").classList.add("hidden");
-        document.getElementById("logoutBtn").classList.remove("hidden");
+        document.getElementById("authContainer").classList.add("hidden");  // Close the login window
+        document.getElementById("logoutBtn").classList.remove("hidden");  // Show the logout button
     } else {
         document.getElementById("authMessage").innerText = "Please enter a valid username and password.";
     }
 });
 
-// Handle signup button click (you can expand this to store new users)
+// Handle signup functionality (expand as needed)
 document.getElementById("signupBtn").addEventListener("click", function() {
     alert("Signup functionality is not yet implemented.");
 });
