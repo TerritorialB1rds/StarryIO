@@ -129,15 +129,6 @@ document.querySelectorAll('button').forEach(button => {
         }
     });
 });
-document.addEventListener("DOMContentLoaded", function() {
-    const loginButton = document.querySelector("#loginButton");
-
-    if (loginButton) {
-        loginButton.addEventListener("click", function() {
-            console.log("Login button clicked!");
-        });
-    }
-});
 function saveProgressToDB(playerId, progressData) {
     // Assuming Firestore or a similar DB is being used
     db.collection("players").doc(playerId).set({
