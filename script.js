@@ -146,3 +146,68 @@ function loadProgress() {
 // Example usage
 const progress = loadProgress();
 console.log("Loaded player progress:", progress);
+// Set the score to 0 initially (or load from localStorage if it exists)
+let score = localStorage.getItem('score') ? parseInt(localStorage.getItem('score')) : 0;
+
+// Function to update the score display
+function updateScoreDisplay() {
+    document.getElementById("score").innerText = score;
+}
+
+// Function to save the score to localStorage
+function saveScore() {
+    localStorage.setItem('score', score);
+}
+
+// Function to handle click event on "Click Me!" button
+document.getElementById("clickButton").addEventListener("click", function() {
+    // Increment the score
+    score++;
+    updateScoreDisplay();
+    saveScore(); // Save the updated score to localStorage
+});
+
+// Load progress on page load
+window.onload = function() {
+    updateScoreDisplay(); // Update the score display on page load
+};
+
+// Handle login functionality (for demo purposes, you can add basic username/password checks)
+document.getElementById("loginToggle").addEventListener("click", function() {
+    // Toggle visibility of login/signup container
+    document.getElementById("authContainer").classList.toggle("hidden");
+});
+
+// Handle logout functionality
+document.getElementById("logoutBtn").addEventListener("click", function() {
+    // Clear the localStorage on logout
+    localStorage.removeItem('score');
+    score = 0;
+    updateScoreDisplay();
+    alert("Logged out successfully.");
+});
+
+// Handle login button click
+document.getElementById("loginBtn").addEventListener("click", function() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    // Simple username/password validation (you can improve this logic)
+    if (username && password) {
+        alert("Logged in successfully!");
+        document.getElementById("authContainer").classList.add("hidden");
+        document.getElementById("logoutBtn").classList.remove("hidden");
+    } else {
+        document.getElementById("authMessage").innerText = "Please enter a valid username and password.";
+    }
+});
+
+// Handle signup button click (you can expand this to store new users)
+document.getElementById("signupBtn").addEventListener("click", function() {
+    alert("Signup functionality is not yet implemented.");
+});
+
+// Close the authentication window
+document.getElementById("closeAuth").addEventListener("click", function() {
+    document.getElementById("authContainer").classList.add("hidden");
+});
