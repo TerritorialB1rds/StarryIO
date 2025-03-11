@@ -138,3 +138,30 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+function saveProgressToDB(playerId, progressData) {
+    // Assuming Firestore or a similar DB is being used
+    db.collection("players").doc(playerId).set({
+        progress: progressData
+    })
+    .then(() => {
+        console.log("Progress saved successfully!");
+    })
+    .catch((error) => {
+        console.error("Error saving progress:", error);
+    });
+}
+
+function loadProgressFromDB(playerId) {
+    db.collection("players").doc(playerId).get()
+    .then((doc) => {
+        if (doc.exists) {
+            console.log("Loaded progress:", doc.data().progress);
+        } else {
+            console.log("No progress found.");
+        }
+    })
+    .catch((error) => {
+        console.error("Error loading progress:", error);
+    });
+}
+
