@@ -129,30 +129,20 @@ document.querySelectorAll('button').forEach(button => {
         }
     });
 });
-function saveProgressToDB(playerId, progressData) {
-    // Assuming Firestore or a similar DB is being used
-    db.collection("players").doc(playerId).set({
-        progress: progressData
-    })
-    .then(() => {
-        console.log("Progress saved successfully!");
-    })
-    .catch((error) => {
-        console.error("Error saving progress:", error);
-    });
+// Function to load progress
+function loadProgress() {
+    // Retrieve player data from localStorage
+    const savedProgress = localStorage.getItem('playerProgress');
+
+    if (savedProgress) {
+        // Parse the saved progress and return it
+        return JSON.parse(savedProgress);
+    }
+
+    // Return default data if no progress is saved
+    return { level: 1, score: 0 }; // Default progress
 }
 
-function loadProgressFromDB(playerId) {
-    db.collection("players").doc(playerId).get()
-    .then((doc) => {
-        if (doc.exists) {
-            console.log("Loaded progress:", doc.data().progress);
-        } else {
-            console.log("No progress found.");
-        }
-    })
-    .catch((error) => {
-        console.error("Error loading progress:", error);
-    });
-}
-
+// Example usage
+const progress = loadProgress();
+console.log("Loaded player progress:", progress);
