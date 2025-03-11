@@ -7,14 +7,31 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Header with Game Name -->
+    <!-- Background Music (Hidden) -->
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Click Sound Effect (Hidden) -->
+    <audio id="clickSound">
+        <source src="click.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Music Toggle Button -->
+    <button id="musicToggle">🎵 Toggle Music</button>
+
+    <!-- Warning message when game is updating -->
+    <div id="updateMessage" class="update-warning hidden">
+        <p>Game will update soon. Please bear with us!</p>
+        <button id="closeUpdateMessage">Close</button>
+    </div>
+
     <header>
         <h1>Starry.IO</h1>
     </header>
 
     <div class="stars"></div>
 
-    <!-- Game Content (Always Visible) -->
     <div id="gameContainer">
         <div class="content">
             <button id="clickButton">Click Me!</button>
@@ -24,7 +41,6 @@
         </div>
     </div>
 
-    <!-- Login/Register Form (Hidden by Default) -->
     <div id="authContainer" class="hidden">
         <h2>Login / Sign Up</h2>
         <input type="text" id="username" placeholder="Username">

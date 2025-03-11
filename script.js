@@ -1,106 +1,97 @@
-const loginBtn = document.getElementById("loginBtn");
-const signupBtn = document.getElementById("signupBtn");
-const logoutBtn = document.getElementById("logoutBtn");
-const loginToggle = document.getElementById("loginToggle");
-const closeAuth = document.getElementById("closeAuth");
-const authMessage = document.getElementById("authMessage");
-const authContainer = document.getElementById("authContainer");
-const usernameInput = document.getElementById("username");
-const passwordInput = document.getElementById("password");
+// Set the current version of the game
+const currentVersion = '1.1.0';  // Change this version when you release an update
 
-const clickButton = document.getElementById("clickButton");
-const scoreDisplay = document.getElementById("score");
+// Check if the version has changed
+const savedVersion = localStorage.getItem('gameVersion');
 
-let currentUser = null;
+// If the version is different, show the update message
+if (savedVersion !== currentVersion) {
+    // Display a warning that the game will update soon
+    document.getElementById('updateMessage').style.display = 'block';
+    
+    // Update the stored version to the new one
+    localStorage.setItem('gameVersion', currentVersion);
+}
+
+// Event listener to hide the message
+document.getElementById('closeUpdateMessage').addEventListener('click', function() {
+    document.getElementById('updateMessage').style.display = 'none';
+});
+
+// Game logic
 let score = 0;
-
-// Load saved session (if any)
-window.onload = () => {
-    const savedUser = localStorage.getItem("currentUser");
-    if (savedUser) {
-        currentUser = savedUser;
-        score = parseInt(localStorage.getItem(`score_${currentUser}`)) || 0;
-        scoreDisplay.textContent = score;
-        logoutBtn.classList.remove("hidden");
-        loginToggle.textContent = `Logged in as ${currentUser}`;
-    } else {
-        score = parseInt(localStorage.getItem("guest_score")) || 0;
-        scoreDisplay.textContent = score;
-    }
-};
-
-// Fix: Toggle Login/Register Form when clicking "Login / Sign Up"
-loginToggle.addEventListener("click", () => {
-    authContainer.classList.toggle("hidden");
-});
-
-// Close Login/Register Form when clicking "Close"
-closeAuth.addEventListener("click", () => {
-    authContainer.classList.add("hidden");
-});
-
-// Sign up system
-signupBtn.addEventListener("click", () => {
-    const username = usernameInput.value.trim();
-    const password = passwordInput.value.trim();
-
-    if (!username || !password) {
-        authMessage.textContent = "Please enter a username and password.";
-        return;
-    }
-
-    if (localStorage.getItem(`user_${username}`)) {
-        authMessage.textContent = "Username already exists. Try logging in.";
-        return;
-    }
-
-    localStorage.setItem(`user_${username}`, password);
-    authMessage.textContent = "Account created! Now login.";
+const scoreDisplay = document.getElementById('score');
+const clickButton = document.getElementById('clickButton');
+clickButton.addEventListener('click', () => {
+    score++;
+    scoreDisplay.textContent = score;
 });
 
 // Login system
-loginBtn.addEventListener("click", () => {
-    const username = usernameInput.value.trim();
-    const password = passwordInput.value.trim();
+const loginToggle = document.getElementById('loginToggle');
+const logoutBtn = document.getElementById('logoutBtn');
+const authContainer = document.getElementById('authContainer');
+const closeAuth = document.getElementById('closeAuth');
+const loginBtn = document.getElementById('loginBtn');
+const signupBtn = document.getElementById('signupBtn');
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
+const authMessage = document.getElementById('authMessage');
 
-    if (!username || !password) {
-        authMessage.textContent = "Please enter a username and password.";
-        return;
-    }
+// Check if user is logged in
+const currentUser = localStorage.getItem('username');
+if (currentUser) {
+    loginToggle.textContent = `Welcome, ${currentUser}`;
+    logoutBtn.classList.remove('hidden');
+} else {
+    loginToggle.textContent = 'Login / Sign Up';
+    logoutBtn.classList.add('hidden');
+}
 
-    const storedPassword = localStorage.getItem(`user_${username}`);
+// Toggle Login / Sign Up form
+loginToggle.addEventListener('click', () => {
+    authContainer.classList.toggle('hidden');
+});
 
+// Close the login/signup form
+closeAuth.addEventListener('click', () => {
+    authContainer.classList.add('hidden');
+});
+
+// Login function
+loginBtn.addEventListener('click', () => {
+    const username = usernameInput.value;
+    const password = passwordInput.value;
+
+    // Simple login validation (for demonstration)
+    const storedPassword = localStorage.getItem(username);
     if (storedPassword === password) {
-        currentUser = username;
-        localStorage.setItem("currentUser", username);
-        score = parseInt(localStorage.getItem(`score_${username}`)) || 0;
-        scoreDisplay.textContent = score;
-        logoutBtn.classList.remove("hidden");
-        loginToggle.textContent = `Logged in as ${username}`;
-        authContainer.classList.add("hidden");
+        localStorage.setItem('username', username);
+        loginToggle.textContent = `Welcome, ${username}`;
+        authContainer.classList.add('hidden');
+        logoutBtn.classList.remove('hidden');
+        authMessage.textContent = 'Logged in successfully!';
     } else {
-        authMessage.textContent = "Invalid username or password.";
+        authMessage.textContent = 'Invalid username or password.';
     }
 });
 
-// Score system (Works with or without login)
-clickButton.addEventListener("click", () => {
-    score++;
-    scoreDisplay.textContent = score;
+// Sign Up function
+signupBtn.addEventListener('click', () => {
+    const username = usernameInput.value;
+    const password = passwordInput.value;
 
-    if (currentUser) {
-        localStorage.setItem(`score_${currentUser}`, score);
+    if (localStorage.getItem(username)) {
+        authMessage.textContent = 'Username already exists.';
     } else {
-        localStorage.setItem("guest_score", score);
+        localStorage.setItem(username, password);
+        authMessage.textContent = 'Account created. You can log in now.';
     }
 });
 
-// Logout system
-logoutBtn.addEventListener("click", () => {
-    localStorage.removeItem("currentUser");
-    currentUser = null;
-    loginToggle.textContent = "Login / Sign Up";
-    logoutBtn.classList.add("hidden");
-    score = parseInt(localStorage.getItem("guest_score")) || 0;
-    scoreDisplay.textContent = score;
+// Logout function
+logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('username');
+    loginToggle.textContent = 'Login / Sign Up';
+    logoutBtn.classList.add('hidden');
 });
