@@ -153,3 +153,24 @@ window.addEventListener('load', () => {
     score = savedScore;
     document.getElementById('scoreDisplay').textContent = `Score: ${score}`;
 });
+// Save progress
+function saveProgress(progressData) {
+    localStorage.setItem("playerProgress", JSON.stringify(progressData));
+}
+
+// Load progress
+function loadProgress() {
+    const savedProgress = localStorage.getItem("playerProgress");
+    if (savedProgress) {
+        return JSON.parse(savedProgress);
+    }
+    return null; // No saved progress found
+}
+
+// Usage
+const progress = loadProgress();
+if (progress) {
+    console.log("Loaded saved progress:", progress);
+} else {
+    console.log("No saved progress found.");
+}
