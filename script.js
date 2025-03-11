@@ -129,48 +129,4 @@ document.querySelectorAll('button').forEach(button => {
         }
     });
 });
-// Check if the button is being selected properly and has an event listener attached
-document.querySelector("#loginButton").addEventListener("click", function() {
-    console.log("Login button clicked!");
-});
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelector("#loginButton").addEventListener("click", function() {
-        console.log("Login button clicked!");
-    });
-});
-let score = 0;
 
-// Call this whenever the score updates
-function updateScore(points) {
-    score += points;
-    document.getElementById('scoreDisplay').textContent = `Score: ${score}`;
-    saveScore(score);  // Save the updated score to localStorage
-}
-
-// Load the score when the page is loaded
-window.addEventListener('load', () => {
-    let savedScore = loadScore();
-    score = savedScore;
-    document.getElementById('scoreDisplay').textContent = `Score: ${score}`;
-});
-// Save progress
-function saveProgress(progressData) {
-    localStorage.setItem("playerProgress", JSON.stringify(progressData));
-}
-
-// Load progress
-function loadProgress() {
-    const savedProgress = localStorage.getItem("playerProgress");
-    if (savedProgress) {
-        return JSON.parse(savedProgress);
-    }
-    return null; // No saved progress found
-}
-
-// Usage
-const progress = loadProgress();
-if (progress) {
-    console.log("Loaded saved progress:", progress);
-} else {
-    console.log("No saved progress found.");
-}
