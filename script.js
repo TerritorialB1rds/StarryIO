@@ -19,12 +19,25 @@ document.getElementById('closeUpdateMessage').addEventListener('click', function
 });
 
 // Game logic
-let score = 0;
+let score = localStorage.getItem('score') ? parseInt(localStorage.getItem('score')) : 0;  // Load the score from localStorage
 const scoreDisplay = document.getElementById('score');
 const clickButton = document.getElementById('clickButton');
+
+// Function to update the score display
+function updateScoreDisplay() {
+    scoreDisplay.textContent = score;
+}
+
+// Function to save the score to localStorage
+function saveScore() {
+    localStorage.setItem('score', score);
+}
+
+// Handle "Click Me!" button click to increment score
 clickButton.addEventListener('click', () => {
     score++;
-    scoreDisplay.textContent = score;
+    updateScoreDisplay();
+    saveScore();
 });
 
 // Login system
@@ -94,7 +107,11 @@ logoutBtn.addEventListener('click', () => {
     localStorage.removeItem('username');
     loginToggle.textContent = 'Login / Sign Up';
     logoutBtn.classList.add('hidden');
+    // Clear the score when logging out
+    score = 0;  // Reset score to 0
+    updateScoreDisplay();  // Update the display
 });
+
 // Background Music Setup
 const bgMusic = document.getElementById('bgMusic');
 const musicToggle = document.getElementById('musicToggle');
@@ -116,6 +133,7 @@ musicToggle.addEventListener('click', () => {
         musicToggle.textContent = "🎵 Play Music";
     }
 });
+
 // Click Sound Effect
 const clickSound = document.getElementById('clickSound');
 
@@ -128,25 +146,6 @@ document.querySelectorAll('button').forEach(button => {
             clickSound.play().catch(error => console.log("Click sound error:", error));
         }
     });
-});
-// Check if the score is stored in localStorage when the page loads
-let score = localStorage.getItem('score') ? parseInt(localStorage.getItem('score')) : 0;
-
-// Function to update the score display
-function updateScoreDisplay() {
-    document.getElementById("score").innerText = score;
-}
-
-// Function to save the score to localStorage
-function saveScore() {
-    localStorage.setItem('score', score);
-}
-
-// Handle "Click Me!" button click to increment score
-document.getElementById("clickButton").addEventListener("click", function() {
-    score++;  // Increment the score
-    updateScoreDisplay();  // Update the score display
-    saveScore();  // Save the new score to localStorage
 });
 
 // Load the score when the page is loaded
@@ -165,29 +164,4 @@ document.getElementById("logoutBtn").addEventListener("click", function() {
     score = 0;  // Reset score to 0
     updateScoreDisplay();  // Update the display
     alert("Logged out successfully.");
-});
-
-// Handle login button click
-document.getElementById("loginBtn").addEventListener("click", function() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-
-    // Simple username/password validation (You can improve this logic later)
-    if (username && password) {
-        alert("Logged in successfully!");
-        document.getElementById("authContainer").classList.add("hidden");  // Close the login window
-        document.getElementById("logoutBtn").classList.remove("hidden");  // Show the logout button
-    } else {
-        document.getElementById("authMessage").innerText = "Please enter a valid username and password.";
-    }
-});
-
-// Handle signup functionality (expand as needed)
-document.getElementById("signupBtn").addEventListener("click", function() {
-    alert("Signup functionality is not yet implemented.");
-});
-
-// Close the authentication window
-document.getElementById("closeAuth").addEventListener("click", function() {
-    document.getElementById("authContainer").classList.add("hidden");
 });
