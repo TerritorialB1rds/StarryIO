@@ -129,4 +129,12 @@ document.querySelectorAll('button').forEach(button => {
         }
     });
 });
+document.addEventListener("DOMContentLoaded", function() {
+    const loginButton = document.querySelector("#loginButton");
 
+    if (loginButton) {
+        loginButton.addEventListener("click", function() {
+            console.log("Login button clicked!");
+        });
+    }
+});
