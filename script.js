@@ -1,5 +1,5 @@
 // Set the current version of the game
-const currentVersion = '1.1.0';  // Change this version when you release an update
+const currentVersion = '1.1.2';  // Change this version when you release an update
 
 // Check if the version has changed
 const savedVersion = localStorage.getItem('gameVersion');
