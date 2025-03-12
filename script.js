@@ -152,21 +152,3 @@ document.querySelectorAll('button').forEach(button => {
 window.onload = function() {
     updateScoreDisplay();  // Update the score display from saved data
 };
-
-// Handle login toggling
-document.getElementById("loginToggle").addEventListener("click", function() {
-    document.getElementById("authContainer").classList.toggle("hidden"); // Toggle the login container
-});
-
-// Handle logout action
-document.getElementById("logoutBtn").addEventListener("click", function() {
-    localStorage.removeItem('score');  // Remove saved score from localStorage
-    score = 0;  // Reset score to 0
-    updateScoreDisplay();  // Update the display
-    alert("Logged out successfully.");
-});
-
-// Load the score when the page is loaded
-window.onload = function() {
-    updateScoreDisplay();  // Update the score display from saved data
-};
