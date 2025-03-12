@@ -166,3 +166,51 @@ button {
     margin: 20px;
     cursor: pointer;
 }
+/* Chat box styling */
+#chat-box {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: 300px;
+    height: 300px;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+/* Chat input field */
+#chat-input {
+    width: calc(100% - 20px);  /* Make the input field full width minus padding */
+    padding: 5px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+/* Send button */
+#sendMessageBtn {
+    margin-top: 10px;
+    width: 100%;
+    padding: 5px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Button hover effect */
+#sendMessageBtn:hover {
+    background-color: #45a049;
+}
+
+/* Center the main button (existing) */
+#clickButton {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
