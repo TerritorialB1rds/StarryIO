@@ -172,7 +172,7 @@ const filter = new BadWords();
 
 // Function to send and display chat messages
 function sendChatMessage() {
-    const message = document.getElementById('chat-input').value.trim();
+    const message = document.getElementById('chat-input').value.trim();  // Get message from input
     if (message) {
         // Clean the message using the profanity filter
         const cleanMessage = filter.clean(message);
@@ -180,7 +180,11 @@ function sendChatMessage() {
         // Display the cleaned message in the chat box
         const chatBox = document.getElementById('chat-box');
         const user = localStorage.getItem('username') || 'Guest';
-        chatBox.innerHTML += `<p><strong>${user}:</strong> ${cleanMessage}</p>`;
+        
+        // Create a new message element and append to the chat box
+        const messageElement = document.createElement('p');
+        messageElement.innerHTML = `<strong>${user}:</strong> ${cleanMessage}`;
+        chatBox.appendChild(messageElement);
 
         // Scroll to the bottom of the chat box
         chatBox.scrollTop = chatBox.scrollHeight;
@@ -201,11 +205,3 @@ document.getElementById('chat-input').addEventListener('keypress', function(even
 });
 
 // Existing login/logout and game logic code ...
-
-// Update the chat box when the page loads (if needed)
-window.onload = function() {
-    updateScoreDisplay();  // Update the score display from saved data
-    // You can load any previous chat messages here if using a server-side solution
-};
-
-// Keep the rest of your existing functionality (music, click, etc.)...
