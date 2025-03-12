@@ -165,3 +165,47 @@ document.getElementById("logoutBtn").addEventListener("click", function() {
     updateScoreDisplay();  // Update the display
     alert("Logged out successfully.");
 });
+// Existing game logic code ...
+
+// Initialize the profanity filter using the bad-words library
+const filter = new BadWords();
+
+// Function to send and display chat messages
+function sendChatMessage() {
+    const message = document.getElementById('chat-input').value.trim();
+    if (message) {
+        // Clean the message using the profanity filter
+        const cleanMessage = filter.clean(message);
+
+        // Display the cleaned message in the chat box
+        const chatBox = document.getElementById('chat-box');
+        const user = localStorage.getItem('username') || 'Guest';
+        chatBox.innerHTML += `<p><strong>${user}:</strong> ${cleanMessage}</p>`;
+
+        // Scroll to the bottom of the chat box
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Clear the input field
+        document.getElementById('chat-input').value = '';
+    }
+}
+
+// Listen for the "Send" button click
+document.getElementById('sendMessageBtn').addEventListener('click', sendChatMessage);
+
+// Optional: Allow users to send a message by pressing "Enter"
+document.getElementById('chat-input').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        sendChatMessage();
+    }
+});
+
+// Existing login/logout and game logic code ...
+
+// Update the chat box when the page loads (if needed)
+window.onload = function() {
+    updateScoreDisplay();  // Update the score display from saved data
+    // You can load any previous chat messages here if using a server-side solution
+};
+
+// Keep the rest of your existing functionality (music, click, etc.)...
