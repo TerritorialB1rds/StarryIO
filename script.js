@@ -19,7 +19,7 @@ document.getElementById('closeUpdateMessage').addEventListener('click', function
 });
 
 // Game logic
-let score = localStorage.getItem('score') ? parseInt(localStorage.getItem('score')) : 0;  // Load the score from localStorage
+let score = localStorage.getItem('score') ? parseInt(localStorage.getItem('score')) : 0;  // Load score from localStorage
 const scoreDisplay = document.getElementById('score');
 const clickButton = document.getElementById('clickButton');
 
@@ -112,39 +112,6 @@ logoutBtn.addEventListener('click', () => {
     updateScoreDisplay();  // Update the display
 });
 
-// Chat and Profanity Filter
-const badWords = ['badword1', 'badword2']; // Add bad words to this list
-const chatMessages = document.getElementById('chatMessages');
-const chatInput = document.getElementById('chat-input');
-const sendChatButton = document.getElementById('sendChatButton');
-
-function checkProfanity(message) {
-    let cleanMessage = message;
-    badWords.forEach(word => {
-        const regex = new RegExp(`\\b${word}\\b`, 'gi');
-        cleanMessage = cleanMessage.replace(regex, '[censored]');
-    });
-    return cleanMessage;
-}
-
-function sendChatMessage() {
-    const message = chatInput.value.trim();
-    if (message) {
-        const cleanMessage = checkProfanity(message);
-        const messageElement = document.createElement('p');
-        messageElement.textContent = cleanMessage;
-        chatMessages.appendChild(messageElement);
-        chatInput.value = ''; // Clear input field
-    }
-}
-
-sendChatButton.addEventListener('click', sendChatMessage);
-chatInput.addEventListener('keypress', function(event) {
-    if (event.key === 'Enter') {
-        sendChatMessage();
-    }
-});
-
 // Background Music Setup
 const bgMusic = document.getElementById('bgMusic');
 const musicToggle = document.getElementById('musicToggle');
@@ -179,6 +146,24 @@ document.querySelectorAll('button').forEach(button => {
             clickSound.play().catch(error => console.log("Click sound error:", error));
         }
     });
+});
+
+// Load the score when the page is loaded
+window.onload = function() {
+    updateScoreDisplay();  // Update the score display from saved data
+};
+
+// Handle login toggling
+document.getElementById("loginToggle").addEventListener("click", function() {
+    document.getElementById("authContainer").classList.toggle("hidden"); // Toggle the login container
+});
+
+// Handle logout action
+document.getElementById("logoutBtn").addEventListener("click", function() {
+    localStorage.removeItem('score');  // Remove saved score from localStorage
+    score = 0;  // Reset score to 0
+    updateScoreDisplay();  // Update the display
+    alert("Logged out successfully.");
 });
 
 // Load the score when the page is loaded
