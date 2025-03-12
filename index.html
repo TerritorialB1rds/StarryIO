@@ -6,8 +6,6 @@
     <title>Starry.IO - Click Game</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <!-- Add the bad-words library from CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bad-words"></script>
 </head>
 <body>
     <!-- Background Music (Hidden) -->
@@ -54,14 +52,14 @@
         <button id="closeAuth">Close</button>
     </div>
 
-    <!-- Chat System -->
-    <div id="chatContainer">
-        <h2>Chat</h2>
-        <div id="chat-box" style="height: 300px; overflow-y: scroll; border: 1px solid black; margin-bottom: 10px;"></div>
-        <input type="text" id="chat-input" placeholder="Type your message here..." />
-        <button id="sendMessageBtn">Send</button>
-    </div>
+    <!-- Chat Box -->
+    <div id="chat-box"></div>
 
+    <!-- Chat Input and Send Button -->
+    <input type="text" id="chat-input" placeholder="Type a message..." />
+    <button id="sendMessageBtn">Send</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bad-words@2.0.0"></script> <!-- Import profanity filter -->
     <script>
         // Set the current version of the game
         const currentVersion = '1.1.0';  // Change this version when you release an update
@@ -104,29 +102,6 @@
             updateScoreDisplay();
             saveScore();
         });
-
-        // Chat System with Profanity Filter
-        const filter = new BadWords();  // Initialize the profanity filter
-
-        // Function to send and display chat messages
-        function sendChatMessage() {
-            const message = document.getElementById('chat-input').value;
-            if (message.trim()) {
-                // Clean the message using the profanity filter
-                const cleanMessage = filter.clean(message);
-
-                // Display the cleaned message in the chat box
-                const chatBox = document.getElementById('chat-box');
-                chatBox.innerHTML += `<p>${cleanMessage}</p>`;
-                chatBox.scrollTop = chatBox.scrollHeight;  // Auto-scroll to the bottom
-
-                // Clear the input field
-                document.getElementById('chat-input').value = '';
-            }
-        }
-
-        // Listen for the send message button click
-        document.getElementById('sendMessageBtn').addEventListener('click', sendChatMessage);
 
         // Login system
         const loginToggle = document.getElementById('loginToggle');
@@ -186,15 +161,100 @@
                 authMessage.textContent = 'Username already exists.';
             } else {
                 localStorage.setItem(username, password);
-                authMessage.textContent = 'Account created successfully!';
+                authMessage.textContent = 'Account created. You can log in now.';
             }
         });
+
+        // Logout function
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('username');
+            loginToggle.textContent = 'Login / Sign Up';
+            logoutBtn.classList.add('hidden');
+            // Clear the score when logging out
+            score = 0;  // Reset score to 0
+            updateScoreDisplay();  // Update the display
+        });
+
+        // Chat functionality
+
+        // Initialize the profanity filter using the bad-words library
+        const filter = new BadWords();
+
+        // Function to send and display chat messages
+        function sendChatMessage() {
+            const message = document.getElementById('chat-input').value.trim();  // Get message from input
+            if (message) {
+                // Clean the message using the profanity filter
+                const cleanMessage = filter.clean(message);
+
+                // Display the cleaned message in the chat box
+                const chatBox = document.getElementById('chat-box');
+                const user = localStorage.getItem('username') || 'Guest';
+                
+                // Create a new message element and append to the chat box
+                const messageElement = document.createElement('p');
+                messageElement.innerHTML = `<strong>${user}:</strong> ${cleanMessage}`;
+                chatBox.appendChild(messageElement);
+
+                // Scroll to the bottom of the chat box
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+                // Clear the input field
+                document.getElementById('chat-input').value = '';
+            }
+        }
+
+        // Listen for the "Send" button click
+        document.getElementById('sendMessageBtn').addEventListener('click', sendChatMessage);
+
+        // Optional: Allow users to send a message by pressing "Enter"
+        document.getElementById('chat-input').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        });
+
+        // Background Music Setup
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+
+        // Enable autoplay after user interaction
+        window.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.play().catch(error => console.log("Autoplay blocked:", error));
+            }
+        }, { once: true }); // Runs only once to enable autoplay
+
+        // Toggle Music Button
+        musicToggle.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.play();
+                musicToggle.textContent = "🔇 Mute Music";
+            } else {
+                bgMusic.pause();
+                musicToggle.textContent = "🎵 Play Music";
+            }
+        });
+
+        // Click Sound Effect
+        const clickSound = document.getElementById('clickSound');
+
+        // Play click sound when any button is clicked
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                // Prevent music toggle from playing the click sound
+                if (event.target.id !== "musicToggle") {
+                    clickSound.currentTime = 0; // Reset sound for quick repeat
+                    clickSound.play().catch(error => console.log("Click sound error:", error));
+                }
+            });
+        });
+
+        // Load the score when the page is loaded
+        window.onload = function() {
+            updateScoreDisplay();  // Update the score display from saved data
+        };
+
     </script>
 </body>
 </html>
-<!-- Chat Box Container -->
-<div id="chat-box"></div>
-
-<!-- Chat Input and Send Button -->
-<input type="text" id="chat-input" placeholder="Type a message..." />
-<button id="sendMessageBtn">Send</button>
