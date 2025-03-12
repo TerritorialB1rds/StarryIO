@@ -19,7 +19,7 @@ document.getElementById('closeUpdateMessage').addEventListener('click', function
 });
 
 // Game logic
-let score = localStorage.getItem('score') ? parseInt(localStorage.getItem('score')) : 0;  // Load score from localStorage
+let score = localStorage.getItem('score') ? parseInt(localStorage.getItem('score')) : 0;  // Load the score from localStorage
 const scoreDisplay = document.getElementById('score');
 const clickButton = document.getElementById('clickButton');
 
@@ -112,40 +112,34 @@ logoutBtn.addEventListener('click', () => {
     updateScoreDisplay();  // Update the display
 });
 
-// Chat functionality
+// Chat and Profanity Filter
+const badWords = ['badword1', 'badword2']; // Add bad words to this list
+const chatMessages = document.getElementById('chatMessages');
+const chatInput = document.getElementById('chat-input');
+const sendChatButton = document.getElementById('sendChatButton');
 
-// Initialize the profanity filter using the bad-words library
-const filter = new BadWords();
+function checkProfanity(message) {
+    let cleanMessage = message;
+    badWords.forEach(word => {
+        const regex = new RegExp(`\\b${word}\\b`, 'gi');
+        cleanMessage = cleanMessage.replace(regex, '[censored]');
+    });
+    return cleanMessage;
+}
 
-// Function to send and display chat messages
 function sendChatMessage() {
-    const message = document.getElementById('chat-input').value.trim();  // Get message from input
+    const message = chatInput.value.trim();
     if (message) {
-        // Clean the message using the profanity filter
-        const cleanMessage = filter.clean(message);
-
-        // Display the cleaned message in the chat box
-        const chatBox = document.getElementById('chat-box');
-        const user = localStorage.getItem('username') || 'Guest';
-        
-        // Create a new message element and append to the chat box
+        const cleanMessage = checkProfanity(message);
         const messageElement = document.createElement('p');
-        messageElement.innerHTML = `<strong>${user}:</strong> ${cleanMessage}`;
-        chatBox.appendChild(messageElement);
-
-        // Scroll to the bottom of the chat box
-        chatBox.scrollTop = chatBox.scrollHeight;
-
-        // Clear the input field
-        document.getElementById('chat-input').value = '';
+        messageElement.textContent = cleanMessage;
+        chatMessages.appendChild(messageElement);
+        chatInput.value = ''; // Clear input field
     }
 }
 
-// Listen for the "Send" button click
-document.getElementById('sendMessageBtn').addEventListener('click', sendChatMessage);
-
-// Optional: Allow users to send a message by pressing "Enter"
-document.getElementById('chat-input').addEventListener('keypress', function(event) {
+sendChatButton.addEventListener('click', sendChatMessage);
+chatInput.addEventListener('keypress', function(event) {
     if (event.key === 'Enter') {
         sendChatMessage();
     }
