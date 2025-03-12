@@ -1,5 +1,5 @@
 // Set the current version of the game
-const currentVersion = '1.1.0';  // Change this version when you release an update
+const currentVersion = '1.1.1';  // Change this version when you release an update
 
 // Check if the version has changed
 const savedVersion = localStorage.getItem('gameVersion');
@@ -145,49 +145,4 @@ function sendChatMessage() {
 document.getElementById('sendMessageBtn').addEventListener('click', sendChatMessage);
 
 // Optional: Allow users to send a message by pressing "Enter"
-document.getElementById('chat-input').addEventListener('keypress', function(event) {
-    if (event.key === 'Enter') {
-        sendChatMessage();
-    }
-});
-
-// Background Music Setup
-const bgMusic = document.getElementById('bgMusic');
-const musicToggle = document.getElementById('musicToggle');
-
-// Enable autoplay after user interaction
-window.addEventListener('click', () => {
-    if (bgMusic.paused) {
-        bgMusic.play().catch(error => console.log("Autoplay blocked:", error));
-    }
-}, { once: true }); // Runs only once to enable autoplay
-
-// Toggle Music Button
-musicToggle.addEventListener('click', () => {
-    if (bgMusic.paused) {
-        bgMusic.play();
-        musicToggle.textContent = "🔇 Mute Music";
-    } else {
-        bgMusic.pause();
-        musicToggle.textContent = "🎵 Play Music";
-    }
-});
-
-// Click Sound Effect
-const clickSound = document.getElementById('clickSound');
-
-// Play click sound when any button is clicked
-document.querySelectorAll('button').forEach(button => {
-    button.addEventListener('click', (event) => {
-        // Prevent music toggle from playing the click sound
-        if (event.target.id !== "musicToggle") {
-            clickSound.currentTime = 0; // Reset sound for quick repeat
-            clickSound.play().catch(error => console.log("Click sound error:", error));
-        }
-    });
-});
-
-// Load the score when the page is loaded
-window.onload = function() {
-    updateScoreDisplay();  // Update the score display from saved data
-};
+document.getElementById('
