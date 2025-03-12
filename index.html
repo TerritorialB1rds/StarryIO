@@ -28,7 +28,7 @@
     </div>
 
     <header>
-        <h1>Starry.IO</h1>
+        <h1 id="gameTitle">Starry.IO</h1>
     </header>
 
     <div class="stars"></div>
@@ -52,15 +52,13 @@
         <button id="closeAuth">Close</button>
     </div>
 
-    <!-- Chat Box Section -->
-    <div id="chat-container">
-        <div id="chat-box"></div>
-        <input type="text" id="chat-input" placeholder="Type a message..." />
-        <button id="sendMessageBtn">Send</button>
+    <!-- Chat container -->
+    <div id="chatContainer">
+        <div id="chatMessages"></div>
+        <input type="text" id="chat-input" placeholder="Type a message...">
+        <button id="sendChatButton">Send</button>
     </div>
 
-    <script src="bad-words.min.js"></script> <!-- Include BadWords library -->
-    <script src="script.js"></script> <!-- Include your JS script -->
+    <script src="scripts.js"></script>
 </body>
 </html>
-
