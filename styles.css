@@ -1,105 +1,82 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: url('background.jpg') no-repeat center center fixed;
-    background-size: cover;
+    background-color: #2d2d2d;
     color: white;
-    text-align: center;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    margin: 0;
 }
 
 header {
-    margin-top: 20px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-#gameContainer {
-    margin-top: 40px;
-}
-
-#clickButton {
-    font-size: 20px;
-    padding: 10px 20px;
-    background-color: #5c6bc0;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 24px;
+#gameTitle {
+    font-size: 3rem;
 }
 
 button {
-    padding: 10px 20px;
-    background-color: #5c6bc0;
-    color: white;
+    background-color: #4CAF50;
     border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
     cursor: pointer;
+    border-radius: 5px;
     margin: 10px;
 }
 
-#score {
-    font-size: 24px;
+button:hover {
+    background-color: #45a049;
 }
 
 .hidden {
     display: none;
 }
 
-/* Chat Box Styling */
-#chat-container {
+#chatContainer {
     position: fixed;
-    top: 10px;
-    left: 10px;
+    top: 20px;
+    left: 20px;
     width: 300px;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 15px;
     border-radius: 10px;
+    max-height: 400px;
+    overflow-y: auto;
 }
 
-#chat-box {
-    max-height: 200px;
+#chatMessages {
+    max-height: 250px;
     overflow-y: auto;
     margin-bottom: 10px;
-    background-color: #333;
-    padding: 10px;
-    border-radius: 5px;
 }
 
 #chat-input {
-    width: 100%;
+    width: 80%;
     padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    font-size: 16px;
 }
 
-button {
+#sendChatButton {
     padding: 10px;
-    background-color: #5c6bc0;
-    border: none;
-    color: white;
+    font-size: 16px;
     cursor: pointer;
-    margin-top: 10px;
 }
 
-#musicToggle {
+.stars {
     position: absolute;
-    top: 10px;
-    right: 10px;
-}
-
-.update-warning {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 10px;
-    color: white;
-    border-radius: 10px;
-}
-
-.update-warning button {
-    background-color: red;
-    color: white;
-    margin-left: 10px;
-    padding: 5px 10px;
-    border: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('stars.gif');
+    background-size: cover;
+    z-index: -1;
 }
