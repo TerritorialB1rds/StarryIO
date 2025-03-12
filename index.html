@@ -28,7 +28,7 @@
     </div>
 
     <header>
-        <h1 id="gameTitle">Starry.IO</h1>
+        <h1>Starry.IO</h1>
     </header>
 
     <div class="stars"></div>
@@ -52,13 +52,16 @@
         <button id="closeAuth">Close</button>
     </div>
 
-    <!-- Chat container -->
     <div id="chatContainer">
-        <div id="chatMessages"></div>
-        <input type="text" id="chat-input" placeholder="Type a message...">
+        <div id="chatHeader">
+            <span>Chat</span>
+            <button id="closeChat">X</button>
+        </div>
+        <div id="chatBox"></div>
+        <input type="text" id="chatInput" placeholder="Type your message..." />
         <button id="sendChatButton">Send</button>
     </div>
 
-    <script src="scripts.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
